@@ -1,7 +1,7 @@
 import { player } from "./Player_mod.js";
-import { hpBar , mpBar , reductionLifeRate , reductionMotivationRate , fatigueRate , fatigue } from "./Vars_mod.js";
+import { hpBar , mpBar , reductionLifeRate , reductionMotivationRate , fatigueRate , fatigue , fatigueIcon} from "./Vars_mod.js";
 import { Lifetimer, timer } from "../script.js";
-import { counter } from "./Components.js";
+
 
 var hora = new Date();
 var horaActual = hora.getHours();
@@ -65,8 +65,8 @@ var horaActual = hora.getHours();
         player.mp = motivationPoints;
         fatigue.innerHTML = player.fatigue;
 
-        document.getElementById('hpBar').setAttribute("max", lifePoints);
-        document.getElementById('mpBar').setAttribute("max", motivationPoints);
+        //document.getElementById('hpBar').setAttribute("max", lifePoints);
+        //document.getElementById('mpBar').setAttribute("max", motivationPoints);
         
         player.timeout = horas;
 
@@ -77,6 +77,74 @@ var horaActual = hora.getHours();
 
     }
 
+//Funcion para obtener la hora actual
+function whatTime(){
+    
+    var now = new Date();
+    var hour = now.getHours();
+    var mint = now.getMinutes();
+
+    const amPm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12; // Convierte 0 en 12 para el formato de 12 horas
+
+   // alert(hour+":"+mint);
+    return hour+":"+mint;
+
+}
+
+//Funcion para establecer la barra acorde a la hora de dormir y despertarse
+export function yourCurrentHP(up,sleep){
+    // Obtener valores de los inputs
+    var horaInicial = up;
+    var horaFinal = sleep;
+
+    // Convertir a minutos para facilitar el cálculo
+    var ahora = whatTime().split(":");
+    //alert(ahora);
+    var inicio = horaInicial.split(":");
+    var fin = horaFinal.split(":");
+    
+    var inicioMinutos = (parseInt(inicio[0]) * 60) + parseInt(inicio[1]);
+    var finMinutos = (parseInt(fin[0]) * 60) + parseInt(fin[1]);
+    var ahoraMinutos = (parseInt(ahora[0]) * 60) + parseInt(ahora[1]);
+    
+    if (finMinutos < inicioMinutos) {
+        finMinutos += 24 * 60; // Añadir un día en minutos
+        }
+    
+    finMinutos = finMinutos - inicioMinutos;
+
+    if (finMinutos < ahoraMinutos) {
+        finMinutos += 12 * 60; // Añadir un día en minutos
+    }
+    
+    // Calcular diferencia
+    var diferencia = finMinutos - ahoraMinutos;
+    
+    // Convertir diferencia a horas y minutos
+    var horas = Math.floor(diferencia / 60);
+
+var lifePoints = 100 * horas;
+var motivationPoints = 100 * (horas/3);
+
+player.hp = lifePoints;
+player.mp = motivationPoints;
+fatigue.innerHTML = player.fatigue;
+
+hpBar.setAttribute('value', lifePoints);
+mpBar.setAttribute('value', motivationPoints);
+
+player.timeout = horas;
+
+}
+
+//Revision por click!
+hpBar.addEventListener('click', porcentaje);
+mpBar.addEventListener('click', porcentaje);
+    
+function porcentaje(){
+alert(this.max +" Y ESTA EN: "+this.value);
+}
 
  // Función para actualizar la barra de progreso
  export function updateProgressBar() {
@@ -137,6 +205,7 @@ export function reduceValue() {
         
     }
     updateProgressBar();
+    fatigueIcon.style.background = "conic-gradient(var(--base2-color) 0% "+(100-player.fatigue)+"%, #ff5733 0% 100%)";
 
     console.log("BARRAS DE ESTADO:");
     console.log("HP: "+player.hp);

@@ -22,6 +22,7 @@ export var hpBar = document.getElementById('hpBar');
 export var mpBar = document.getElementById('mpBar');
 
 export var fatigue = document.getElementById("fatigue-porcent");
+export var fatigueIcon = document.querySelector(".fatigue-icon");
 
 export let reductionLifeRate = (player.timeout / ((player.timeout*60)*60)); // 0.0002777777777777778;
 //alert("reduccion de vida es de: "+reductionLifeRate);
