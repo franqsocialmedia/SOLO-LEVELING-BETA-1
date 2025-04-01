@@ -1,0 +1,119 @@
+<html lang="en">
+    <head>
+        <title>LIFE SYSTEM BETA 0.1</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="assets/Flecha.png">
+
+        <meta name="description" content="This Beta is to try to do the APP in a light version using Javascript, HTML and CSS only">
+        <meta name="keywords" content="HTML5, CSS3, Javascript, APP, Solo Leveling">
+        <meta name="author" content="Yan-Yan">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta charset="utf-8">
+        <!meta http-equiv="refresh" content="4">
+
+        <link href="style.css" rel="stylesheet">
+        <script src="scripts/script.js" defer type="module"></script>
+    </head>
+
+    <body>
+        <div class="app">
+            <header class="advice_mode-content">
+                <section id="mode-content" class="mode-content">
+                    <button class="system-btn" id="mode-btn" data-panel="mode">
+                        <b>MODE:</b>
+                        <img src="assets/Flecha.png" class="img-system">
+                    </button>
+                </section>
+                
+                <section class="advice-content" id="advice-icons" data-panel="advice">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                    <img src="assets/Flecha.png" class="advice-icon">
+                </section>
+
+                <section id="status-content" class="status-content flexible">
+                    <section id="bars-content" class="bars-content">
+                        <span class="bar-text">HP:</span>
+                            <progress max="1000" value="1000" id="hpBar"></progress>
+
+                        <span class="bar-text">MP:</span>
+                            <progress max="800" value="800" id="mpBar"></progress>
+                    
+                        
+                    </section>
+                    
+                    <section class="fatigue-content " id="fatigue-btn" data-panel="fatigue">
+                    <img src="assets/Flecha.png" class="fatigue-icon">
+                    <b>
+                        <span id="fatigue-porcent" class="fatigue-porcent">76</span>%
+                    </b>
+                    </section>
+                </section>
+            </header>
+    <hr>
+            <aside id="panel-content" class="panel-content show">
+                <! comes by a component code>   
+                
+            </aside>
+
+            <main class="flexible">
+                <div id="main-screen" class="main-screen flexible">
+                    <img src="assets/Flecha.png" class="img-title show">
+                    <section id="title" class="title-content flexible">
+                        
+                        <section id="title" class="title">
+                            Main Screen
+                        </section>  
+                    </section>  
+
+                    <section id="status">
+                        <!by component>
+                    </section>   
+
+                    <section id="options" class="options flexible">
+                        <span>Select the next step do you want</span>
+                        <button class="option-btn" id="daily-btn" data-panel="daily">
+                            <img src="assets/Flecha.png" class="img-btn">
+                            <b>Daily Task</b>
+                        </button>
+
+                        <button class="option-btn" id="quest-btn" data-panel="quest">
+                            <img src="assets/Flecha.png" class="img-btn">
+                            <b>Quest</b>
+                        </button>
+
+                        <button class="option-btn" id="inventory-btn" data-panel="inventory">
+                            <img src="assets/Flecha.png" class="img-btn">
+                            <b>Inventory</b>
+                        </button>
+
+                        <button class="option-btn" id="status-btn" data-panel="status">
+                            <img src="assets/Flecha.png" class="img-btn">
+                            <b>Status</b>
+                        </button>
+                    </section>
+                </div>
+            </main>
+    <hr>
+            <footer class="flexible">
+                <section class="system-content"> 
+                    <button id="system-btn" class="system-btn" data-panel="system">
+                        <img src="assets/Flecha.png" class="img-system">
+                        System
+                    </button> 
+                </section>    
+                
+                <section id="help-content" class="help-content" data-panel="help">
+                    <img src="assets/Flecha.png" class="help-icon">
+                </section>    
+
+                <section id="decision-content"> <!by a component decision> </section>    
+            </footer>
+        </div>
+    </body>
+</html>
