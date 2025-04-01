@@ -1,6 +1,6 @@
 <html lang="en">
     <head>
-        <title>LIFE SYSTEM BETA 0.1</title>
+        <title>LIFE LEVELING SYSTEM BETA 1.0</title>
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/Flecha.png">
 
@@ -36,7 +36,7 @@
                     <img src="assets/Flecha.png" class="advice-icon">
                 </section>
 
-                <section id="status-content" class="status-content flexible">
+                <section id="status-content" class="status-content">
                     <section id="bars-content" class="bars-content">
                         <span class="bar-text">HP:</span>
                             <progress max="1000" value="1000" id="hpBar"></progress>
@@ -48,7 +48,8 @@
                     </section>
                     
                     <section class="fatigue-content " id="fatigue-btn" data-panel="fatigue">
-                    <img src="assets/Flecha.png" class="fatigue-icon">
+                    <!img src="assets/Flecha.png" class="fatigue-icon">
+                    <div class="fatigue-icon"></div>
                     <b>
                         <span id="fatigue-porcent" class="fatigue-porcent">76</span>%
                     </b>
@@ -56,15 +57,16 @@
                 </section>
             </header>
     <hr>
-            <aside id="panel-content" class="panel-content show">
+            <aside id="panel-content" class="panel-content hide">
                 <! comes by a component code>   
+                
                 
             </aside>
 
-            <main class="flexible">
-                <div id="main-screen" class="main-screen flexible">
-                    <img src="assets/Flecha.png" class="img-title show">
-                    <section id="title" class="title-content flexible">
+            <main class="main-content">
+                <div id="main-screen" class="main-screen">
+                    <img src="assets/Flecha.png" class="img-title">
+                    <section id="title" class="title-content">
                         
                         <section id="title" class="title">
                             Main Screen
@@ -75,7 +77,7 @@
                         <!by component>
                     </section>   
 
-                    <section id="options" class="options flexible">
+                    <section id="options" class="options">
                         <span>Select the next step do you want</span>
                         <button class="option-btn" id="daily-btn" data-panel="daily">
                             <img src="assets/Flecha.png" class="img-btn">
@@ -100,11 +102,15 @@
                 </div>
             </main>
     <hr>
-            <footer class="flexible">
+            <footer class="footer-content">
                 <section class="system-content"> 
-                    <button id="system-btn" class="system-btn" data-panel="system">
+                    <button id="system-btn" class="option-btn" data-panel="system">
                         <img src="assets/Flecha.png" class="img-system">
                         System
+                    </button> 
+                    <button id="system-btn" class="option-btn" data-panel="system">
+                        <img src="assets/Flecha.png" class="img-system">
+                        Ok
                     </button> 
                 </section>    
                 

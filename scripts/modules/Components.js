@@ -1,6 +1,5 @@
 import { panel } from "./Vars_mod.js";
 
-var si = "GIANT";
 export var counter;
 //Components
 

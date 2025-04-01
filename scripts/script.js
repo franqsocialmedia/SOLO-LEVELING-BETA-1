@@ -30,7 +30,7 @@
     import { player } from "./modules/Player_mod.js";
     import { panelActive } from "./modules/Panels_mod.js";
     import { updateProgressBar , daytime , reduceValue, lifeReduction  } from "./modules/Timeout.js";
-    import { stopwatch , counter } from "./modules/Components.js";
+    import { stopwatch } from "./modules/Components.js";
     
     daytime('10:20','02:10');
     export var timer;
