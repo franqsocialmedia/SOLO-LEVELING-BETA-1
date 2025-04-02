@@ -114,18 +114,22 @@ export function yourCurrentHP(up,sleep){
     
     finMinutos = finMinutos - inicioMinutos;
 
+
     if (finMinutos < ahoraMinutos) {
-        finMinutos += 12 * 60; // Añadir un día en minutos
+        finMinutos += 12* 60; // Añadir un día en minutos
     }
-    
+
     // Calcular diferencia
     var diferencia = finMinutos - ahoraMinutos;
+
     
     // Convertir diferencia a horas y minutos
     var horas = Math.floor(diferencia / 60);
 
+
 var lifePoints = 100 * horas;
 var motivationPoints = 100 * (horas/3);
+
 
 player.hp = lifePoints;
 player.mp = motivationPoints;
@@ -143,7 +147,7 @@ hpBar.addEventListener('click', porcentaje);
 mpBar.addEventListener('click', porcentaje);
     
 function porcentaje(){
-alert(this.max +" Y ESTA EN: "+this.value);
+alert(Math.round(this.value) +" / "+this.max);
 }
 
  // Función para actualizar la barra de progreso
@@ -155,6 +159,7 @@ alert(this.max +" Y ESTA EN: "+this.value);
 
     hpBar.setAttribute('value', percentageHP);
     mpBar.setAttribute('value', percentageMP);
+
 }
 
 function contextReduction(){

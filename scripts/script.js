@@ -27,15 +27,15 @@
 */    
     
     import { hpBar , mpBar , dailyBtn , statusBtn , questBtn , inventoryBtn , modeBtn , fatigueBtn , adviceBtn , iteractionBtn , helpBtn, fatigueIcon} from "./modules/Vars_mod.js";
-    import { player } from "./modules/Player_mod.js";
+    import { lifeCalc, player } from "./modules/Player_mod.js";
     import { panelActive } from "./modules/Panels_mod.js";
     import { updateProgressBar , daytime , reduceValue, lifeReduction, yourCurrentHP  } from "./modules/Timeout.js";
     import { stopwatch } from "./modules/Components.js";
     
-    fatigueIcon.style.background = "conic-gradient(var(--base2-color) 0% 100%, red 50% 100%)";
-      
-
     //daytime('10:20','02:10');
+    lifeCalc(player.timeup,player.timesleep);
+
+    fatigueIcon.style.background = "conic-gradient(var(--base2-color) 0% 100%, red 50% 100%)";
     yourCurrentHP(player.timeup,player.timesleep);
 
     export var timer;
@@ -74,9 +74,9 @@
 
 
     //hpBar.setAttribute('max',player.hp);
-    hpBar.setAttribute('value',player.hp);
+    //hpBar.setAttribute('value',player.hp);
     //mpBar.setAttribute('max',player.mp);
-    mpBar.setAttribute('value',player.mp)
+    //mpBar.setAttribute('value',player.mp)
 
     dailyBtn.addEventListener('click', panelActive);
     statusBtn.addEventListener('click', panelActive);
