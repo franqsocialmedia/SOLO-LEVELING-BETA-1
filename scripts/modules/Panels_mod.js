@@ -1,51 +1,140 @@
-import { main , panel } from "./Vars_mod.js";
+import { player } from "./Player_mod.js";
+import { main , panel , fatigue, wholeBody} from "./Vars_mod.js";
+
+var section;
+var span;
+var button;
 
 //Modulo de paneles
-
 export function panelActive(e){
     
-    console.log("Deberias estar en la seccion: "+this.getAttribute('data-panel'));
+    console.log("BOTON: "+this.getAttribute('data-panel'));
 
-    main.classList.toggle('show');
-    panel.classList.toggle('show');
-    eliminarPaneles(this.getAttribute('data-panel'));
+//    main.classList.toggle('hide');
+ //   panel.classList.toggle('hide');
+    
 
     switch(this.getAttribute('data-panel')){
         case "daily":
             console.log("DAILY");
-            
-            eliminarPaneles('daily');
-
             dailyPanel.crearPanel();
+        break;
 
-            break;
         case "quest":
             console.log("QUEST");
-            eliminarPaneles('quest');
-
-            break;
+        break;
+        
         case "inventory":
             console.log("INVENTORY");
-            break;
+        break;
+        
         case "status":
             console.log("STATUS");
-            break;
+        break;
+        
         case "system":
             console.log("SYSTEM");
-            break;
+        break;
+
+        case "fatigue":
+            console.log("FATIGUE");
+            fatiguePanel.crearPanel("abrir");
+        break;
+
+        case "ok":
+            console.log("OK");
+            fatiguePanel.crearPanel(this.getAttribute('data-action'));
+        break;
 
         default:
             console("==== Opcion alternativa ====");
     }
 }
 
+const fatiguePanel = {
+    titulo: "fatigue",
+    
+    opciones: ["Take a Break", "Hide"],
 
-function eliminarPaneles(x){
-    if(x != "daily"){
-        dailyPanel.eliminarPanel();
-    }
+    crearPanel(x){
+        //alert("no");
 
+       switch(x){
+            case "abrir":
+                panel.classList.toggle("hide");
+                bkg.classList.toggle("hide");
+                section = document.createElement('section');
+                span = document.createElement('span');    
+     
+                section.setAttribute("data-panel","fatigue"); 
+                section.innerHTML = "FATIGUE: ";
+                section.classList.add('new-Panel');    
 
+                var sectionContent = document.createElement('section');
+                sectionContent.classList.add('new-Panel');        
+                sectionContent.setAttribute("data-panel","fatigue"); 
+                
+                
+                span.classList.add("fatigue-porcent_big");
+                span.innerHTML = Math.floor(player.fatigue)+"%";
+
+                section.appendChild(span);
+                sectionContent.appendChild(section);
+
+            this.opciones.forEach(elemento => {
+            
+                if(elemento == "Take a Break"){
+                    button = document.createElement('button');
+                    button.setAttribute("data-panel", "ok");
+                    button.setAttribute("data-action", elemento);     
+                    button.innerHTML = elemento;
+                    button.classList.add('option-btn');
+
+                    button.addEventListener('click', panelActive);
+                    sectionContent.appendChild(button);
+                    panel.appendChild(sectionContent);
+                };
+                
+                if(elemento == "Hide"){
+                    button = document.createElement('button');
+                    button.setAttribute("data-panel", "ok");
+                    button.setAttribute("data-action", elemento);    
+                    button.innerHTML = elemento;
+                    button.classList.add('option-btn');
+
+                    button.addEventListener('click', panelActive);
+                    sectionContent.appendChild(button);
+                    panel.appendChild(sectionContent);
+                }
+                
+            });
+                
+            break;
+        
+        case "cerrar":        
+            panel.classList.toggle("hide");
+            bkg.classList.toggle("hide");
+        break;
+        
+        case "Hide":        
+            document.querySelector(".new-Panel").remove();
+
+            panel.classList.toggle("hide");
+            bkg.classList.toggle("hide");
+        break;
+       }
+
+        panel.style.width = "80%";
+        panel.style.height = "20%";
+        panel.style.left ="10%";
+        panel.style.top = "40%";
+
+        bkg.style.width = window.innerWidth;
+        bkg.style.height = window.innerHeight;
+        bkg.style.top = 0;
+        bkg.style.left = 0;
+
+    },
 }
 
 const dailyPanel = {
@@ -130,14 +219,8 @@ const dailyPanel = {
             pie.appendChild(opciones);
         });
 
-
         panel.appendChild(pie);
         return panel;
-
-
-
-
-  
     },
 
     eliminarPanel(){

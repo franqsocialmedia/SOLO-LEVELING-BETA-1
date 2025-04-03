@@ -1,10 +1,13 @@
 import { player } from "./Player_mod.js";
-import { hpBar , mpBar , reductionLifeRate , reductionMotivationRate , fatigueRate , fatigue , fatigueIcon} from "./Vars_mod.js";
-import { Lifetimer, timer } from "../script.js";
-
+import { hpBar , mpBar , goUp ,  goSleep , fatigue , fatigueIcon} from "./Vars_mod.js";
+import { Fatiguetimer, Lifetimer, Motivationtimer, timer } from "../script.js";
 
 var hora = new Date();
 var horaActual = hora.getHours();
+
+let reductionLifeRate;
+let reductionMotivationRate;
+let fatigueRate;
 
 //Modulo para el tiempo
 
@@ -31,123 +34,114 @@ var horaActual = hora.getHours();
             }
         }
 
-      export function daytime(up,sleep){
+      export function currentStatusPlayer(up,sleep){
             // Obtener valores de los inputs
-            var horaInicial = up;
-            var horaFinal = sleep;
+        var horaInicial = up;
+        var horaFinal = sleep;
+        var horaActual = whatTime();
 
-            player.timeup = horaInicial;
-            player.timesleep = horaFinal;
-            
-            // Convertir a minutos para facilitar el cálculo
-            var inicio = horaInicial.split(":");
-            var fin = horaFinal.split(":");
-            
-            var inicioMinutos = (parseInt(inicio[0]) * 60) + parseInt(inicio[1]);
-            var finMinutos = (parseInt(fin[0]) * 60) + parseInt(fin[1]);
-            
-            // Si la hora final es menor, asumimos que es del día siguiente
-            if (finMinutos < inicioMinutos) {
-                finMinutos += 24 * 60; // Añadir un día en minutos
+        // Convertir a minutos para facilitar el cálculo
+        var ahora = horaActual.split(":");
+        var inicio = horaInicial.split(":");
+        var fin = horaFinal.split(":");
+        
+        var inicioMinutos = (parseInt(inicio[0]) * 60) + parseInt(inicio[1]);
+        var finMinutos = (parseInt(fin[0]) * 60) + parseInt(fin[1]);
+        var ahoraMinutos = (parseInt(ahora[0]) * 60) + parseInt(ahora[1]);
+        
+        if (finMinutos < ahoraMinutos) {
+            finMinutos += 12 * 60; // Añadir un día en minutos
             }
-            
-            // Calcular diferencia
-            var diferencia = finMinutos - inicioMinutos;
-            
-            // Convertir diferencia a horas y minutos
-            var horas = Math.floor(diferencia / 60);
-            var minutos = diferencia % 60;
+
+        // Calcular diferencia
+        var diferencia = finMinutos - ahoraMinutos;
+        
+        // Convertir diferencia a horas y minutos
+        var horas = Math.floor(diferencia / 60);
+        var minutos = diferencia % 60;
 
         var lifePoints = 100 * horas;
-        var motivationPoints = 100 * (horas/3);
-
+        var motivationPoints = 80 * horas;
+        
+        hpBar.setAttribute('max', lifePoints);
+        hpBar.setAttribute('value', lifePoints);
+        mpBar.setAttribute('max', motivationPoints);
+        mpBar.setAttribute('value', motivationPoints);
+    
         player.hp = lifePoints;
         player.mp = motivationPoints;
-        fatigue.innerHTML = player.fatigue;
-
-        //document.getElementById('hpBar').setAttribute("max", lifePoints);
-        //document.getElementById('mpBar').setAttribute("max", motivationPoints);
-        
         player.timeout = horas;
+        fatigue.innerHTML = player.fatigue;
+        
+        console.log("HORA ACTUAL: "+(Math.floor(ahoraMinutos/60)));
+        console.log("UP: "+player.timeup +" | SLEEP: "+ player.timesleep);
+        console.log("MAX TIME: "+player.timeout +" hrs "+ minutos+" mint");
+        console.log("-----------------------");
+       // console.log("HP ORIGINAL: "+player.hp);
+        console.log("HP: "+hpBar.value+" / "+player.hp);
+       // console.log("MP ORGINAL: "+player.mp);
+        console.log("MP: "+mpBar.value+" / "+player.mp);
+        console.log("FATIGUE: "+player.fatigue);
+        console.log("---------------------");
 
-        console.log("Estas despierto al rededor de: "+horas +" horas y "+ minutos+" minutos");
-        console.log("La cantidad de vida que posees es: "+player.hp);
-        console.log("Tu motivacion es de: "+player.mp);
-        console.log("la fatiga esta en: "+player.fatigue);
+        
+        reductionLifeRate = ((hpBar.max/player.timeout) / 60) / 60; // 0.0002777777777777778;
+        //alert("reduccion de vida es de: "+reductionLifeRate);
+        //alert(hpBar.max);
 
+        reductionMotivationRate = ((mpBar.max/player.timeout) / 60) / 60; // 0.04938271604938271;
+        //alert("reduccion de motivacion es de: "+reductionMotivationRate);
+
+        fatigueRate = 100 / (25 * 60); // 0.06666666666666667;
+        //alert("reduccion de fatiga es de: "+fatigueRate);
+      
     }
 
 //Funcion para obtener la hora actual
-function whatTime(){
+export function whatTime(){
     
     var now = new Date();
     var hour = now.getHours();
     var mint = now.getMinutes();
 
-    const amPm = hour >= 12 ? 'PM' : 'AM';
-    hour = hour % 12 || 12; // Convierte 0 en 12 para el formato de 12 horas
-
-   // alert(hour+":"+mint);
+    if(hour > 12){
+        hour = hour - 12;
+    }
+    //alert(hour+":"+mint);
     return hour+":"+mint;
 
 }
 
-//Funcion para establecer la barra acorde a la hora de dormir y despertarse
-export function yourCurrentHP(up,sleep){
-    // Obtener valores de los inputs
-    var horaInicial = up;
-    var horaFinal = sleep;
-
-    // Convertir a minutos para facilitar el cálculo
-    var ahora = whatTime().split(":");
-    //alert(ahora);
-    var inicio = horaInicial.split(":");
-    var fin = horaFinal.split(":");
-    
-    var inicioMinutos = (parseInt(inicio[0]) * 60) + parseInt(inicio[1]);
-    var finMinutos = (parseInt(fin[0]) * 60) + parseInt(fin[1]);
-    var ahoraMinutos = (parseInt(ahora[0]) * 60) + parseInt(ahora[1]);
-    
-    if (finMinutos < inicioMinutos) {
-        finMinutos += 24 * 60; // Añadir un día en minutos
-        }
-    
-    finMinutos = finMinutos - inicioMinutos;
-
-
-    if (finMinutos < ahoraMinutos) {
-        finMinutos += 12* 60; // Añadir un día en minutos
-    }
-
-    // Calcular diferencia
-    var diferencia = finMinutos - ahoraMinutos;
-
-    
-    // Convertir diferencia a horas y minutos
-    var horas = Math.floor(diferencia / 60);
-
-
-var lifePoints = 100 * horas;
-var motivationPoints = 100 * (horas/3);
-
-
-player.hp = lifePoints;
-player.mp = motivationPoints;
-fatigue.innerHTML = player.fatigue;
-
-hpBar.setAttribute('value', lifePoints);
-mpBar.setAttribute('value', motivationPoints);
-
-player.timeout = horas;
-
-}
 
 //Revision por click!
 hpBar.addEventListener('click', porcentaje);
 mpBar.addEventListener('click', porcentaje);
     
-function porcentaje(){
-alert(Math.round(this.value) +" / "+this.max);
+export function porcentaje(){
+    var now = new Date();
+    var hour = now.getHours();
+    
+    if (hour < player.timeout){
+        hour = hour + 12;
+    }    
+    var total = hour - player.timeout;
+
+   //confirm("INICIO: "+player.timeup+" DORMIR: "+player.timesleep+" TOTAL: "+player.timeout);
+    //alert(Math.round(this.value) +" / "+this.max +" | Quedan: "+player.timeout+" horas");
+}
+
+export function startTheGame(){
+    var now = new Date();
+    var hour = now.getHours();
+    
+    if (hour < player.timeout){
+        hour = hour + 12;
+    }    
+
+    var total = hour - player.timeout;
+    player.timeout = total;
+    
+    currentStatusPlayer(goUp,goSleep);
 }
 
  // Función para actualizar la barra de progreso
@@ -162,6 +156,8 @@ alert(Math.round(this.value) +" / "+this.max);
 
 }
 
+
+
 function contextReduction(){
 
     horaActual = hora.getHours();
@@ -174,13 +170,6 @@ function contextReduction(){
         horaActual = parseInt(player.timesleep.split(":")) - horaActual;
     }
     
-    if(horaActual < 3){
-        reductionLifeRate = reductionLifeRate * 1.5;
-        reductionMotivationRate = reductionMotivationRate * 1.5;
-        fatigueRate = fatigueRate / 1.5;
-
-        console.log("Quedan menos de 3 horas para cerrar las misiones de hoy");
-    }
 }
 
 // Función para reducir el valor
@@ -223,6 +212,7 @@ export function reduceValue() {
     if (hpBar.value < 1 || player.state == "descanso") {
         clearInterval(timer);
         lifeReduction();
+        motivationReduction();
     }
 }
 
@@ -230,12 +220,80 @@ export function lifeReduction(){
 
     contextReduction();
 
-    player.hp = hpBar.value - reductionLifeRate;
+    switch(player.state){
+        case "activo":
+            player.hp = hpBar.value - reductionLifeRate;
+        break;
+        case "descanso":
+            player.hp = hpBar.value - reductionLifeRate;
+        break;
+        case "dormir":
+            player.hp = hpBar.value + reductionLifeRate;
+        break;
+    }
 
     updateProgressBar();
 
     // Si llega a cero, detener el temporizador
-    if (hpBar.value < 1 || player.state == "activo") {
+    if (hpBar.value < 1) {
         clearInterval(Lifetimer);
+        console.log("HP LLEGO A CERO. Procede a descansar");
+        player.state = "dormir";
+    }
+}
+
+export function motivationReduction(){
+
+    contextReduction();
+
+    player.mp = mpBar.value - reductionMotivationRate;
+
+    updateProgressBar();
+
+    // Si llega a cero, detener el temporizador
+    if (mpBar.value < 1) {
+        clearInterval(Motivationtimer);
+        console.log("MP LLEGO A CERO. Debes hacer misiones");
+        player.state = "descanso";
+    }
+}
+
+export function fatigueReduction(){
+
+    contextReduction();
+
+    switch(player.state){
+        case "activo":
+            player.fatigue = player.fatigue + fatigueRate;
+            fatigue.innerHTML = Math.floor(player.fatigue);
+        break;
+
+        case "descanso":
+            if(player.fatigue < 1){
+                player.fatigue = 0;
+            }else{
+                player.fatigue = player.fatigue - fatigueRate;
+            }
+            fatigue.innerHTML = Math.floor(player.fatigue);
+        break;
+
+        case "dormir":
+            if(player.fatigue < 1){
+                player.fatigue = 0;
+            }else{
+                player.fatigue = player.fatigue - fatigueRate;
+            }
+            fatigue.innerHTML = Math.floor(player.fatigue);
+        break;
+    }
+    
+
+    updateProgressBar();
+
+    // Si llega a cero, detener el temporizador
+    if (fatigue.value >= 100) {
+        clearInterval(Fatiguetimer);
+        console.log("FATIGA LLEGO AL 100%. No podras luchar");
+        player.state = "descanso";
     }
 }

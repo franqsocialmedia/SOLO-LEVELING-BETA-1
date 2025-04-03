@@ -1,4 +1,5 @@
 /*
+
     El siguiente paso es crear listas de informacion y lograr mostrarlas en un panel diferente. La logica es crear panel al seleccionar la seccion y destruirla al dale a cancelar u ok.
 
     Esta 1ra etapa de la aplicacion finaliza con la creacion de las misiones diarias segun el Modo (la poca lista de tareas que yo haya puesto para entonces) y la realizacion o no de las mismas.
@@ -26,28 +27,35 @@
 
 */    
     
-    import { hpBar , mpBar , dailyBtn , statusBtn , questBtn , inventoryBtn , modeBtn , fatigueBtn , adviceBtn , iteractionBtn , helpBtn, fatigueIcon} from "./modules/Vars_mod.js";
-    import { lifeCalc, player } from "./modules/Player_mod.js";
+    import { hpBar , mpBar , dailyBtn , statusBtn , questBtn , inventoryBtn , modeBtn , fatigueBtn , adviceBtn , iteractionBtn , helpBtn, fatigueIcon, goUp, goSleep} from "./modules/Vars_mod.js";
+    import { player } from "./modules/Player_mod.js";
     import { panelActive } from "./modules/Panels_mod.js";
-    import { updateProgressBar , daytime , reduceValue, lifeReduction, yourCurrentHP  } from "./modules/Timeout.js";
-    import { stopwatch } from "./modules/Components.js";
+    import { updateProgressBar , currentStatusPlayer , reduceValue, lifeReduction, whatTime, startTheGame, motivationReduction, fatigueReduction  } from "./modules/Timeout.js";
+    import { searchText, stopwatch } from "./modules/Components.js";
     
-    //daytime('10:20','02:10');
-    lifeCalc(player.timeup,player.timesleep);
+    export var start = 0;
 
+    if(start == 0){
+        startTheGame();
+        start = 1;
+    }
+   
     fatigueIcon.style.background = "conic-gradient(var(--base2-color) 0% 100%, red 50% 100%)";
-    yourCurrentHP(player.timeup,player.timesleep);
 
     export var timer;
     export var Lifetimer;
+    export var Motivationtimer;
+    export var Fatiguetimer;
 
     Lifetimer = setInterval(lifeReduction,1000);
-    console.log("PLAYER STATE: "+ player.state);
+    Motivationtimer = setInterval(motivationReduction,1000);
+    Fatiguetimer = setInterval(fatigueReduction,1000);
 
 // CAMBIAR POR EL INICIO DE LAS MISIONES
     helpBtn.addEventListener('click' , stateChanger);
+    
     stateChanger();
-
+    
     adviceBtn.addEventListener('click' , stopwatch.count);
 
     
@@ -85,10 +93,12 @@
 
     modeBtn.addEventListener('click', panelActive);
     fatigueBtn.addEventListener('click', panelActive);
+    fatigueBtn.addEventListener('click', searchText);
     adviceBtn.addEventListener('click', panelActive);
 
     iteractionBtn.addEventListener('click', panelActive);
     helpBtn.addEventListener('click', panelActive);
+
 
 
         

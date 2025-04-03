@@ -26,7 +26,7 @@
 
     border-radius: 3px;
     
-   /* border: solid 0.1px var(--contrast-color); */
+    /*border: solid 0.1px var(--contrast-color); */
 
     font-size:var(--font1);
 }
@@ -70,6 +70,43 @@ span{
 
 }
 
+aside{
+    background-color: var(--base-color);
+    
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap:8px;
+
+    border:solid 1px var(--base2-color);
+
+
+    position:fixed;
+
+    z-index:2;
+
+    font-size: var(--font2);
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+
+hr{
+    width:80%;
+    border:solid 0.3px var(--base2-color);
+}
+
+div#bkg{
+    background-color: var(--base-color);
+
+    opacity: 0.9;
+    position:fixed;
+    z-index:1;
+}
 .main-panel{
 
     border:solid 1px var(--base2-color);
@@ -167,8 +204,22 @@ progress{
 
 }
 
+.new-Panel{
+    font-family: "Leveling";
+
+    width:95%;
+    height:auto;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+
+    gap:10px;
+}
+
 .fatigue-content{
-    
 
     width:32%;
     
@@ -181,16 +232,10 @@ progress{
 
 }
 .fatigue-icon{
-        display:inline-block;
 
         width: 40px; /* Tamaño del aro */
         height: 40px;
         border-radius: 50%;
-        
-        /*background: conic-gradient(
-            var(--base-color) 0% 70%,
-            #ff5733 50% 100%);
-            */
 
         position: relative;
     
@@ -210,6 +255,10 @@ progress{
 
 .fatigue-porcent{
     font-size: 10vw;
+}
+
+.fatigue-porcent_big{
+    font-size: 15vw;
 }
 
 
@@ -343,8 +392,29 @@ progress{
 }
 
 .option-btn{
+    width:45%;
+    height:auto;
+
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+
+    padding: 5px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--base-color);
+    border:solid 0.5px var(--base2-color);
+
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.option-btn_big{
     width:40%;
     height:auto;
+
+    padding:7px;
 
     display: flex;
     flex-direction: row;

@@ -1,0 +1,49 @@
+# TEXTO 1 : "el cielo azul"
+espanol: El cielo es azul y las nubes son blancas.
+ingles: The sky is blue and the clouds are white.
+portugues: O céu é azul e as nuvens são brancas.
+
+# TEXTO 2
+espanol: Los libros son ventanas al conocimiento.
+ingles: Books are windows to knowledge.
+portugues: Os livros são janelas para o conhecimento.
+
+# TEXTO 3
+espanol: La música es el lenguaje universal.
+ingles: Music is the universal language.
+portugues: A música é a linguagem universal.
+
+# TEXTO 4
+espanol: El tiempo vuela cuando te diviertes.
+ingles: Time flies when you're having fun.
+portugues: O tempo voa quando você está se divertindo.
+
+# TEXTO 5
+espanol: La paciencia es una virtud valiosa.
+ingles: Patience is a valuable virtue.
+portugues: A paciência é uma virtude valiosa.
+
+# TEXTO 6
+espanol: El conocimiento es poder en el mundo moderno.
+ingles: Knowledge is power in the modern world.
+portugues: Conhecimento é poder no mundo moderno.
+
+# TEXTO 7
+espanol: El agua es esencial para toda forma de vida.
+ingles: Water is essential for all forms of life.
+portugues: A água é essencial para todas as formas de vida.
+
+# TEXTO 8
+espanol: La risa es el mejor remedio.
+ingles: Laughter is the best medicine.
+portugues: O riso é o melhor remédio.
+
+# TEXTO 9
+espanol: La vida es como una caja de chocolates.
+ingles: Life is like a box of chocolates.
+portugues: A vida é como uma caixa de chocolates.
+
+# TEXTO 10
+espanol: La tecnología cambia nuestras vidas cada día.
+ingles: Technology changes our lives every day.
+portugues: A tecnologia muda nossas vidas todos os dias.
