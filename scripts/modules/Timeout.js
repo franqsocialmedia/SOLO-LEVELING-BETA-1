@@ -1,5 +1,5 @@
 import { player } from "./Player_mod.js";
-import { hpBar , mpBar , goUp ,  goSleep , fatigue , fatigueIcon} from "./Vars_mod.js";
+import { hpBar , mpBar , goUp ,  goSleep , fatigue , fatigueIcon, hpInfo, mpInfo} from "./Vars_mod.js";
 import { Fatiguetimer, Lifetimer, Motivationtimer, timer } from "../script.js";
 
 var hora = new Date();
@@ -65,8 +65,11 @@ let fatigueRate;
         
         hpBar.setAttribute('max', lifePoints);
         hpBar.setAttribute('value', lifePoints);
+        hpInfo.innerHTML = hpBar.value+" / "+hpBar.max;
+
         mpBar.setAttribute('max', motivationPoints);
         mpBar.setAttribute('value', motivationPoints);
+        mpInfo.innerHTML = mpBar.value+" / "+mpBar.max;
     
         player.hp = lifePoints;
         player.mp = motivationPoints;
@@ -126,8 +129,6 @@ export function porcentaje(){
     }    
     var total = hour - player.timeout;
 
-   //confirm("INICIO: "+player.timeup+" DORMIR: "+player.timesleep+" TOTAL: "+player.timeout);
-    //alert(Math.round(this.value) +" / "+this.max +" | Quedan: "+player.timeout+" horas");
 }
 
 export function startTheGame(){
@@ -153,6 +154,9 @@ export function startTheGame(){
 
     hpBar.setAttribute('value', percentageHP);
     mpBar.setAttribute('value', percentageMP);
+    
+    hpInfo.innerHTML = Math.floor(hpBar.value)+" / "+hpBar.max;
+    mpInfo.innerHTML = Math.floor(mpBar.value)+" / "+mpBar.max;
 
 }
 

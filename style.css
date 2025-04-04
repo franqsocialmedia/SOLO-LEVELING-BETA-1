@@ -95,10 +95,6 @@ aside{
 
 }
 
-hr{
-    width:80%;
-    border:solid 0.3px var(--base2-color);
-}
 
 div#bkg{
     background-color: var(--base-color);
@@ -183,7 +179,7 @@ div#bkg{
 }
 
 progress{
-    width:220px;
+    width:170px;
     height:12px;
     border-color:var(--base2-color);
 }
@@ -409,6 +405,26 @@ progress{
 
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.disabled_option-btn{
+    width:45%;
+    height:auto;
+
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+
+    padding: 5px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--base2-color);
+    border:solid 0.5px var(--base2-color);
+    text-transform: uppercase;
+
+    opacity: 0.2;
 }
 .option-btn_big{
     width:40%;

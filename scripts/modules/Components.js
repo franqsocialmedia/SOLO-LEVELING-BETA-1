@@ -72,7 +72,7 @@ export function seleccionarTexto(textId, language, callback) {
             }
         }
     };
-    xhr.open("GET", "assets/answers.txt", true);
+    xhr.open("GET", "./assets/answers.txt", true);
     xhr.send();
 }
 

@@ -88,8 +88,14 @@ const fatiguePanel = {
                     button.setAttribute("data-panel", "ok");
                     button.setAttribute("data-action", elemento);     
                     button.innerHTML = elemento;
-                    button.classList.add('option-btn');
-
+                    
+                    if(player.state == "activo"){    
+                        button.classList.add('option-btn');
+                    }
+                    else{            
+                        button.classList.add('disabled_option-btn');
+                        button.disabled = true;
+                    }
                     button.addEventListener('click', panelActive);
                     sectionContent.appendChild(button);
                     panel.appendChild(sectionContent);

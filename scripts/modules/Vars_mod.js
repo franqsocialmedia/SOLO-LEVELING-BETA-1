@@ -24,6 +24,8 @@ export var goSleep = "02:15";
 
 export var hpBar = document.getElementById('hpBar');
 export var mpBar = document.getElementById('mpBar');
+export var hpInfo = document.getElementById('hp-info');
+export var mpInfo = document.getElementById('mp-info');
 
 export var fatigue = document.querySelector(".fatigue-porcent");
 export var fatigueIcon = document.querySelector(".fatigue-icon");
