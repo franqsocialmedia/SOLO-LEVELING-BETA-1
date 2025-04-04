@@ -423,6 +423,7 @@ progress{
     background-color: var(--base2-color);
     border:solid 0.5px var(--base2-color);
     text-transform: uppercase;
+    color:white;
 
     opacity: 0.2;
 }

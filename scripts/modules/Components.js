@@ -126,7 +126,7 @@ export function buscarTexto(contenido, textId, language) {
     };
 }
 
-var text;
+var text = player.level;
 var language = player.language;
 var result;
 
