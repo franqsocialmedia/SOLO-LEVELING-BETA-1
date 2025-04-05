@@ -39,6 +39,8 @@
         startTheGame();
         start = 1;
     }
+    panelActive(player.panel);
+    
    
     fatigueIcon.style.background = "conic-gradient(var(--base2-color) 0% 100%, red 50% 100%)";
 

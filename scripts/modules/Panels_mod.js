@@ -1,49 +1,96 @@
 import { player } from "./Player_mod.js";
-import { main , panel , fatigue, wholeBody} from "./Vars_mod.js";
+import { main , panel , fatigue, wholeBody, bkg} from "./Vars_mod.js";
 
+var sectionContent;
 var section;
 var span;
 var button;
+var dataElement;
+var dataPanel;
+var dataAction;
+var parentContent;
+var panelSelect;
+var no = 0;
+var panelName;
+var newID;
 
 //Modulo de paneles
 export function panelActive(e){
-    
-    console.log("BOTON: "+this.getAttribute('data-panel'));
+if(event){
+    dataElement = document.getElementById(this.id);
+    dataPanel = dataElement.getAttribute('data-panel');
+    dataAction = dataElement.getAttribute('data-action');
+}else{
+    dataElement = main;
+    dataPanel = "main";
+    dataAction = "nuevoPanel";
+}
 
-//    main.classList.toggle('hide');
- //   panel.classList.toggle('hide');
-    
+    switch(dataPanel){
+        case "main":
+            console.log("MAIN");
+            panelName = mainPanel;
 
-    switch(this.getAttribute('data-panel')){
+            parentContent = main;
+            panelSelect = parentContent.id;
+            crearPanel(dataAction);
+        break;
+
         case "daily":
             console.log("DAILY");
-            dailyPanel.crearPanel();
+            panelName = dailyPanel;
+
+            parentContent = dataElement.parentNode;
+            panelSelect = parentContent.id;
+            crearPanel(dataAction);
         break;
 
         case "quest":
             console.log("QUEST");
+            panelName = questPanel;
+
+            parentContent = dataElement.parentNode;
+            panelSelect = parentContent.id;
+            crearPanel(dataAction);
         break;
         
         case "inventory":
             console.log("INVENTORY");
+            panelName = inventoryPanel;
+
+            parentContent = dataElement.parentNode;
+            panelSelect = parentContent.id;
+            crearPanel(dataAction);
         break;
         
         case "status":
             console.log("STATUS");
+            panelName = statusPanel;
+
+            parentContent = dataElement.parentNode;
+            panelSelect = parentContent.id;
+            crearPanel(dataAction);
         break;
         
         case "system":
             console.log("SYSTEM");
+            panelName = systemPanel;
+
+            parentContent = dataElement.parentNode;
+            panelSelect = parentContent.id;
+            crearPanel(dataAction);
         break;
 
         case "fatigue":
             console.log("FATIGUE");
-            fatiguePanel.crearPanel("abrir");
-        break;
+            panelName = fatiguePanel;
 
-        case "ok":
-            console.log("OK");
-            fatiguePanel.crearPanel(this.getAttribute('data-action'));
+            parentContent = dataElement.parentNode;
+            panelSelect = parentContent.id;
+
+//            confirm(parentContent);
+  //          confirm(panelSelect);
+            crearPanel(dataAction);
         break;
 
         default:
@@ -51,85 +98,101 @@ export function panelActive(e){
     }
 }
 
-const fatiguePanel = {
-    titulo: "fatigue",
-    
-    opciones: ["Take a Break", "Hide"],
+function infoPanel(panel , array){
 
-    crearPanel(x){
-        //alert("no");
+    for(var x=0; x<array.length; x++){
+        //confirm(array[x]);
+    }
+}
+
+//Los paneles segun las secciones estan distribuidas aqui con un Switch que analiza el DataAction del boton. 
+function crearPanel(x){
+        
+       // confirm("Se activo: "+x);
+       // confirm("Del panel: "+dataPanel);
 
        switch(x){
-            case "abrir":
-                panel.classList.toggle("hide");
-                bkg.classList.toggle("hide");
+        //El caso nuevoPanel es para crear el panel flotante el cual con la funcion styleAdj se ajustara segun el caso del dataPanel.
+            case "nuevoPanel":
+                infoPanel(panelName.titulo , panelName.opciones);
+                
                 section = document.createElement('section');
                 span = document.createElement('span');    
-     
-                section.setAttribute("data-panel","fatigue"); 
-                section.innerHTML = "FATIGUE: ";
-                section.classList.add('new-Panel');    
+                sectionContent = document.createElement('section');
 
-                var sectionContent = document.createElement('section');
-                sectionContent.classList.add('new-Panel');        
-                sectionContent.setAttribute("data-panel","fatigue"); 
-                
-                
-                span.classList.add("fatigue-porcent_big");
-                span.innerHTML = Math.floor(player.fatigue)+"%";
+                panelName.contentPanel();
+                crearBotones();
 
-                section.appendChild(span);
-                sectionContent.appendChild(section);
-
-            this.opciones.forEach(elemento => {
-            
-                if(elemento == "Take a Break"){
-                    button = document.createElement('button');
-                    button.setAttribute("data-panel", "ok");
-                    button.setAttribute("data-action", elemento);     
-                    button.innerHTML = elemento;
-                    
-                    if(player.state == "activo"){    
-                        button.classList.add('option-btn');
-                    }
-                    else{            
-                        button.classList.add('disabled_option-btn');
-                        button.disabled = true;
-                    }
-                    button.addEventListener('click', panelActive);
-                    sectionContent.appendChild(button);
-                    panel.appendChild(sectionContent);
-                };
-                
-                if(elemento == "Hide"){
-                    button = document.createElement('button');
-                    button.setAttribute("data-panel", "ok");
-                    button.setAttribute("data-action", elemento);    
-                    button.innerHTML = elemento;
-                    button.classList.add('option-btn');
-
-                    button.addEventListener('click', panelActive);
-                    sectionContent.appendChild(button);
-                    panel.appendChild(sectionContent);
-                }
-                
-            });
-                
+                no = no + 1;
             break;
         
-        case "cerrar":        
-            panel.classList.toggle("hide");
-            bkg.classList.toggle("hide");
-        break;
-        
-        case "Hide":        
-            document.querySelector(".new-Panel").remove();
-
-            panel.classList.toggle("hide");
-            bkg.classList.toggle("hide");
-        break;
+            case "Cancel":                   
+                parentContent.remove();
+                panel.classList.toggle("hide");
+                bkg.classList.toggle("hide");
+            break;
+            
+            case "Take a Break":        
+                player.state = "descanso";
+                dataElement.classList.toggle('disabled_option-btn');
+                dataElement.disabled = true;
+            break;
+            
+            case "Hide":        
+                parentContent.remove();
+                panel.classList.toggle("hide");
+                bkg.classList.toggle("hide");
+            break;
        }
+      panelName.styleAdj();
+    };
 
+
+function crearBotones(){
+    //Creacion de botones
+    panelName.opciones.forEach(elemento => {
+
+        if(elemento == "Take a Break"){
+            button = document.createElement('button');
+            button.setAttribute("data-panel", dataElement.getAttribute("data-panel"));
+            button.setAttribute("data-action", elemento);     
+            button.id = elemento;     
+            button.innerHTML = elemento;
+            
+            if(player.state == "activo"){    
+                button.classList.add('option-btn');
+            }
+            else{            
+                button.classList.add('disabled_option-btn');
+                button.disabled = true;
+            }
+            button.addEventListener('click', panelActive);
+            sectionContent.appendChild(button);
+            panel.appendChild(sectionContent);
+        };
+        
+        if(elemento == "Hide"){
+            button = document.createElement('button');
+            button.setAttribute("data-panel", dataElement.getAttribute("data-panel"));
+            button.setAttribute("data-action", elemento);
+            button.id = elemento;         
+            button.innerHTML = elemento;
+            button.classList.add('option-btn');
+
+            button.addEventListener('click', panelActive);
+            sectionContent.appendChild(button);
+            panel.appendChild(sectionContent);
+        }
+    });
+    }
+
+//Aqui estan cada panel o seccion como objeto y su contenido.
+const fatiguePanel = {
+    titulo: "fatigue",
+    opciones: ["Take a Break", "Hide"],
+
+    styleAdj (){
+        
         panel.style.width = "80%";
         panel.style.height = "20%";
         panel.style.left ="10%";
@@ -139,8 +202,71 @@ const fatiguePanel = {
         bkg.style.height = window.innerHeight;
         bkg.style.top = 0;
         bkg.style.left = 0;
-
     },
+    contentPanel (){
+        
+        panel.classList.remove("hide");
+        bkg.classList.remove("hide");
+
+        section.setAttribute("data-panel",dataPanel); 
+        section.innerHTML = dataPanel.toUpperCase()+": ";
+        section.classList.add('new-Panel');    
+
+        newID = sectionContent.tagName + "_" + no;
+        sectionContent.classList.add('new-Panel');        
+        sectionContent.id = newID;     
+        sectionContent.setAttribute("data-panel",dataPanel); 
+        
+        span.classList.add("fatigue-porcent_big");
+        span.innerHTML = Math.floor(player.fatigue)+"%";
+
+        section.appendChild(span);
+        sectionContent.appendChild(section);
+    }
+}
+
+const mainPanel = {
+    titulo: "daily",
+    icono: "assets/Flecha.png",
+    
+    cuerpo:["Auto Daily Quest", "Title Quest: Vector Dungeon"],
+    orientacion: "View the missions for today",
+    advice: "If the time to do it start, you will be notified",
+
+    opciones: ["Ok", "Cancel"],
+
+    styleAdj (){
+        
+        panel.style.width = "80%";
+        panel.style.height = "20%";
+        panel.style.left ="10%";
+        panel.style.top = "40%";
+
+        bkg.style.width = window.innerWidth;
+        bkg.style.height = window.innerHeight;
+        bkg.style.top = 0;
+        bkg.style.left = 0;
+    },
+    contentPanel (){
+        
+       // panel.classList.remove("hide");
+        //bkg.classList.remove("hide");
+
+        section.setAttribute("data-panel",dataPanel); 
+        section.innerHTML = dataPanel.toUpperCase()+": ";
+        section.classList.add('new-Panel');    
+
+        newID = sectionContent.tagName + "_" + no;
+        sectionContent.classList.add('new-Panel');        
+        sectionContent.id = newID;     
+        sectionContent.setAttribute("data-panel",dataPanel); 
+        
+        span.classList.add("fatigue-porcent_big");
+        span.innerHTML = Math.floor(player.fatigue)+"%";
+
+        section.appendChild(span);
+        sectionContent.appendChild(section);
+    }
 }
 
 const dailyPanel = {
@@ -152,87 +278,49 @@ const dailyPanel = {
     advice: "If the time to do it start, you will be notified",
 
     opciones: ["Ok", "Cancel"],
-
-    crearPanel(){
-        const cabecera = document.createElement('div');
-        cabecera.classList.add('cabecera');
-        cabecera.classList.add('flexible');
-        cabecera.classList.add('muestra');
-
-        const icono = document.createElement('img');
-        icono.classList.add('img-title');
-        icono.src = "assets/Flecha.png";
-
-        const seccion = document.createElement('section');
-        seccion.id = "title";
-        seccion.classList.add('title-content');
-        seccion.classList.add('flexible');
-
-        const titulo = document.createElement('section');
-        titulo.id = "title";
-        titulo.classList.add('title');
-        titulo.innerHTML = this.titulo;
-
-        panel.appendChild(cabecera);
-        seccion.appendChild(titulo);
-
-        cabecera.appendChild(icono);
-        cabecera.appendChild(seccion);
-
-
-        const cuerpo = document.createElement('div');
-        cuerpo.id = "cuerpo";
-        cuerpo.classList.add('cuerpo');
-       // cuerpo.classList.add('flexible');
-        cuerpo.classList.add('muestra');
-
-        const texto = document.createElement('span');
-        texto.classList.add("text-orientation");
-        texto.innerHTML = this.orientacion;
-
-        const contenido = document.createElement('div');
-        contenido.id = "cuerpo-contenido";
-        contenido.classList.add('cuerpo-contenido');
-        contenido.classList.add('flexible');
-
-        this.cuerpo.forEach(opcion => {
-            console.log(opcion);
-
-            const mision = document.createElement('section');
-            mision.classList.add('list');
-            mision.id = "prueba";
-            mision.innerHTML = opcion;
-
-            contenido.appendChild(mision);
-        });
-
-        cuerpo.appendChild(texto);
-        cuerpo.appendChild(contenido);
-        panel.appendChild(cuerpo);
-        
-        const pie = document.createElement('div');
-        pie.id = "pie-panel";
-        pie.classList.add("flexible");
-        pie.classList.add("selection-content");
-        
-        this.opciones.forEach(multi => {
-            console.log(multi);
-
-            const opciones = document.createElement('button');
-            opciones.classList.add('selection-btn');
-            opciones.innerHTML = multi;
-
-            pie.appendChild(opciones);
-        });
-
-        panel.appendChild(pie);
-        return panel;
-    },
-
-    eliminarPanel(){
-        panel.removeChild(cuerpo);
-        panel.removeChild(pie);
-        panel.removeChild(cabecera);
-
-    }
 }
+
+const questPanel = {
+    titulo: "quest",
+    icono: "assets/Flecha.png",
+    
+    cuerpo:["Auto Daily Quest", "Title Quest: Vector Dungeon"],
+    orientacion: "View the missions for today",
+    advice: "If the time to do it start, you will be notified",
+
+    opciones: ["Ok", "Cancel"],
+}
+
+const inventoryPanel = {
+    titulo: "inventory",
+    icono: "assets/Flecha.png",
+    
+    cuerpo:["Auto Daily Quest", "Title Quest: Vector Dungeon"],
+    orientacion: "View the missions for today",
+    advice: "If the time to do it start, you will be notified",
+
+    opciones: ["Ok", "Cancel"],
+}
+
+const statusPanel = {
+    titulo: "status",
+    icono: "assets/Flecha.png",
+    
+    cuerpo:["Auto Daily Quest", "Title Quest: Vector Dungeon"],
+    orientacion: "View the missions for today",
+    advice: "If the time to do it start, you will be notified",
+
+    opciones: ["Ok", "Cancel"],
+}
+
+const systemPanel = {
+    titulo: "system",
+    icono: "assets/Flecha.png",
+    
+    cuerpo:["Auto Daily Quest", "Title Quest: Vector Dungeon"],
+    orientacion: "View the missions for today",
+    advice: "If the time to do it start, you will be notified",
+
+    opciones: ["Ok", "Cancel"],
+}
+

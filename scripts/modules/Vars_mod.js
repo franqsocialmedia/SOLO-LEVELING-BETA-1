@@ -28,6 +28,7 @@ export var hpInfo = document.getElementById('hp-info');
 export var mpInfo = document.getElementById('mp-info');
 
 export var fatigue = document.querySelector(".fatigue-porcent");
+export var fatigueBig = document.getElementById("porcentID");
 export var fatigueIcon = document.querySelector(".fatigue-icon");
 
 

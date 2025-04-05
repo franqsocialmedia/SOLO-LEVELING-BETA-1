@@ -23,6 +23,7 @@
         state : "activo",  //puede ser "ACTIVO" , "DESCANSO" , "DORMIR"
         game_state : [], //stopwatch , timer , rest , daily , boss , fatigued , fainted
         language : "espanol", //Esp , En
+        panel : "main", //cada uno de los segmentos actuales
         }
 
 

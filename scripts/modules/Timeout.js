@@ -1,5 +1,5 @@
 import { player } from "./Player_mod.js";
-import { hpBar , mpBar , goUp ,  goSleep , fatigue , fatigueIcon, hpInfo, mpInfo} from "./Vars_mod.js";
+import { hpBar , mpBar , goUp ,  goSleep , fatigue , fatigueIcon, hpInfo, mpInfo, fatigueBig} from "./Vars_mod.js";
 import { Fatiguetimer, Lifetimer, Motivationtimer, timer } from "../script.js";
 
 var hora = new Date();
